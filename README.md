@@ -1,4 +1,4 @@
-#Udacity Machine Learning Course
+# Udacity Machine Learning Course
 This repo contains all of my projects for the Udacity Machine Learning course.
 This course covered the entire gamut from starting with raw, messy, messy data
 you want to run models on all the way through building an accurate predictive model.
@@ -11,13 +11,13 @@ find on executives at Enron (such as their compensation, age, gender).
 It was a fun and interesting way to learn Machine Learning as well as how to use
 raw text data as input into a model.
 
-##Course Review
+## Course Review
 The overall lesson from this course was how to go from...
 
 Dataset --> Features --> Algorithm --> Evaluation
 (and how this process is not linear, you optimize and move backwards and forwards)
 
-###Dataset
+### Dataset
 When you begin with new data you need to determine:
 * What am I interested in / what do I want to predict?
 * Do I have enough data to test?
@@ -52,6 +52,6 @@ Once you have picked a model you have to validate it. This is, in reality, part 
 In /final_project you will find an entire end-to-end machine learning process with the Enron data set. Some files to call out are:
 * convertcsv.py: In this file I wrote a simple Python script to convert the pickle data in to a CSV so I could explore the data in Excel. This made the visualize step significantly easier for me. You can see that file at EnronData.csv
 * poi_id.py: This is the most important file in the entire repo. It is the end to end process for the Enron project. I start with the raw data, remove outliers, build features, scale and transform them, pick my algo (via a long Grid Search CV process), and then run my final output
-* All_Data_Algs_k5_trials_*: these are the .csvs I built to review the output of my Grid Search CV. This was very helpful in keeping track of all my testing and making sure I picked the best algorithm in the end. 
+* All_Data_Algs_k5_trials_*: these are the .csvs I built to review the output of my Grid Search CV. This was very helpful in keeping track of all my testing and making sure I picked the best algorithm in the end.
 
 This course was a lot of fun. I learned a lot and would recommend it to anyone. For more information go to: https://www.udacity.com/course/intro-to-machine-learning--ud120
