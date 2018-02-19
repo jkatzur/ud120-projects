@@ -23,8 +23,15 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 
 #########################################################
-### your code goes here ###
+from sklearn import tree
+clf = tree.DecisionTreeClassifier(min_samples_split = 40)
 
+print "Features are: %i" %(len(features_train[0]))
+t0 = time()
+clf = clf.fit(features_train, labels_train)
+print "		training time:", round(time()-t0, 3), "s"
+t0 = time()
+print "Score is %r and time is %r" %(clf.score(features_test, labels_test), round(time()-t0, 3))
 
 #########################################################
 

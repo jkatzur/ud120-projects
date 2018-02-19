@@ -18,5 +18,14 @@
 import pickle
 
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
-
-
+count = 0
+nas = dict.fromkeys(enron_data["SKILLING JEFFREY K"].keys(), 0)
+for p in enron_data:
+	if enron_data[p]['poi'] == 1:
+		count += 1
+	for key in enron_data[p]:
+		if enron_data[p][key] == "NaN":
+			nas[key] += 1
+print "%i Total People\n%i POIs" %(len(enron_data),count)
+for n in nas:
+	print "%s has %i NAs (%f %%)" %(n, nas[n], float(nas[n]) / 146)

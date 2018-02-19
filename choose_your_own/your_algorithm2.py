@@ -39,57 +39,58 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 
-highest = 0
+best = {'score': 0, 'model': '', 'params': {}}
 
-print "\n\n\n"
-print "************************************NEW RUN***************************************"
-print "-------------------------------------------"
-print "Naive Bayes"
 bayes = GaussianNB()
-t0 = time()
 bayes.fit(features_train, labels_train)
-print "training time:", round(time()-t0, 3), "s"
-t0 = time()
-print "Accuracy is %r and time is %r" %(bayes.score(features_test, labels_test), round(time()-t0, 3))
+score = bayes.score(features_test, labels_test)
+if (score > best['score']):
+	best['score'] = score
+	best['model'] = 'bayes'
+	best['params'] = {}
 
-print "-------------------------------------------"
-print "SVM"
-svm = SVC(kernel = "rbf", C=10000.0)
-t0 = time()
-svm.fit(features_train, labels_train)
-print "training time:", round(time()-t0, 3), "s"
-t0 = time()
-print "Accuracy is %r and time is %r" %(svm.score(features_test, labels_test), round(time()-t0, 3))
+
+for cs in (1.0, 10.0, 100.0, 1000.0, 10000.0):
+	svm = SVC(kernel = "rbf", C=10000.0)
+	svm.fit(features_train, labels_train)
+	score = svm.score(features_test, labels_test)
+	if (score > best['score']):
+		best['score'] = score
+		best['model'] = 'svc'
+		best['params'] = {'c': cs}
+
 
 for alg in ("auto", "ball_tree", "kd_tree", "brute"):
-	for neighbors in (1, 2, 3, 4, 5, 10, 50, 100, 250):
-		print "-------------------------------------------"
-		print "KNN, Alg %s, run with %i" %(alg, neighbors)
-		neighbors = KNeighborsClassifier(n_neighbors = neighbors, algorithm = alg)
-		t0 = time()
+	for n in (1, 2, 3, 4, 5, 10, 50, 100, 250):
+		neighbors = KNeighborsClassifier(n_neighbors = n, algorithm = alg)
 		neighbors.fit(features_train, labels_train)
-		print "		training time:", round(time()-t0, 3), "s"
-		t0 = time()
-		print "Accuracy is %r and time is %r" %(neighbors.score(features_test, labels_test), round(time()-t0, 3))
+		score = neighbors.score(features_test, labels_test)
+		if (score > best['score']):
+			best['score'] = score
+			best['model'] = 'knn'
+			best['params'] = {'alg': alg, 'neighbors': n}
 
-print "-------------------------------------------"
-print "Ada Boost"
-boost = AdaBoostClassifier()
-t0 = time()
+boost = AdaBoostClassifier(n_estimators = 250)
 boost.fit(features_train, labels_train)
-print "		training time:", round(time()-t0, 3), "s"
-t0 = time()
-print "Accuracy is %r and time is %r" %(boost.score(features_test, labels_test), round(time()-t0, 3))
+score = boost.score(features_test, labels_test)
+if (score > best['score']):
+			best['score'] = score
+			best['model'] = 'boost'
+			best['params'] = {}
+
+for n in (1, 5, 10, 25, 100):
+	forest = RandomForestClassifier(n_estimators = n)
+	forest.fit(features_train, labels_train)
+	score = forest.score(features_test, labels_test)
+	if (score > best['score']):
+				best['score'] = score
+				best['model'] = 'forest'
+				best['params'] = {'n': n}
+
+print "Best Score is %r with model type %s" %(best['score'], best['model'])
+print best['params']
 
 
-print "-------------------------------------------"
-print "Random Forest"
-forest = RandomForestClassifier(n_estimators=10)
-t0 = time()
-forest.fit(features_train, labels_train)
-print "		training time:", round(time()-t0, 3), "s"
-t0 = time()
-print "Accuracy is %r and time is %r" %(forest.score(features_test, labels_test), round(time()-t0, 3))
 
 try:
     prettyPicture(clf, features_test, labels_test)
