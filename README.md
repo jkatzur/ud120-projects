@@ -25,7 +25,7 @@ When you begin with new data you need to determine:
 * Can I generate enough features? <-- do I know enough about each input to generate a reasonable prediction
 See /datasets_questions for example of how you start
 
-###Features
+### Features
 Once I answer those questions positively I begin the feature process
 * Exploration: Visualize the features, inspect for correlations, remove outliers, and clean the data. It is tremendously important to use this opportunity to remove outliers. They can have dramatic negative impact on your eventual results, and often this is just because of some data input error. Spending the time here up front can save you a ton of time later! See /evaluation and /outliers for examples.
 * Creation: once you have played with the data you want to create the specific features you will evaluate.
